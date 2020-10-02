@@ -5,6 +5,10 @@
     <button @click="incrementCount">
       インクリメント
     </button>
+
+    <button @click="reset">
+      リセット
+    </button>
   </div>
 </template>
 
@@ -20,6 +24,9 @@ export default {
       console.log(`before increment value: ${this.count}`)
       this.count += 1
       console.log(`after increment value: ${this.count}`)
+    },
+    reset() {
+      this.count = 0
     }
   },
 }
