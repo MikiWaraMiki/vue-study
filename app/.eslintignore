@@ -1,0 +1,5 @@
+config/
+src/plugins/*
+test/*
+env/*
+node_modules
