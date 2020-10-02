@@ -1,0 +1,11 @@
+{
+  "recommendations": [
+    "dbaeumer.vscode-eslint",
+    "streetsidesoftware.code-spell-checker",
+    "octref.vetur",
+    "davidanson.vscode-markdownlint",
+    "rebornix.ruby",
+    "formulahendry.auto-rename-tag",
+    "ionutvmi.path-autocomplete"
+  ]
+}
