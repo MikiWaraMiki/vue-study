@@ -1,18 +1,15 @@
 <template>
   <div id="app">
-    <div v-if="counte == 0">
-      <p>押されていないやないかい</p>
-    </div>
-    <div v-else>
-      <p>{{ count }}回押されました</p>
-    </div>
-    <button @click="incrementCount">
-      インクリメント
-    </button>
-
-    <button @click="reset">
-      リセット
-    </button>
+    <input type="number" v-model="arrayNum" placeholder="数字を入力してください" />
+    <button @click="createArray()">FizzBuzz計算</button>
+    <template v-if="nums">
+      <p v-for="num in nums" :key="num">
+        {{ num }}は{{ fizzBuzzText(num) }}
+      </p>
+    </template>
+    <template v-else>
+      <p>数字が入力されていません</p>
+    </template>
   </div>
 </template>
 
@@ -20,18 +17,21 @@
 export default {
   data() {
     return {
-      count: 0,
+      nums: undefined,
+      arrayNum: undefined,
     }
   },
   methods: {
-    incrementCount() {
-      console.log(`before increment value: ${this.count}`)
-      this.count += 1
-      console.log(`after increment value: ${this.count}`)
+    createArray() {
+      if( !this.arrayNum || this.arrayNum < 1) return
+
+      const parseIntNumber = parseInt(this.arrayNum)
+      this.nums = [...Array(parseIntNumber).keys()].map(i => ++i)
+      console.log(this.nums)
     },
-    reset() {
-      this.count = 0
-      window.alert("リセットしました")
+    fizzBuzzText(num) {
+      const fizzBuzzStr = (num % 3 ? '' : 'Fizz') + (num % 5 ? '' : 'Buzz')
+      return fizzBuzzStr || 'なんでもないや'
     }
   },
 }
