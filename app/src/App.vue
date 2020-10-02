@@ -1,7 +1,11 @@
 <template>
   <div id="app">
-    <p>{{ count }}回押されました</p>
-
+    <div v-if="counte == 0">
+      <p>押されていないやないかい</p>
+    </div>
+    <div v-else>
+      <p>{{ count }}回押されました</p>
+    </div>
     <button @click="incrementCount">
       インクリメント
     </button>
@@ -27,6 +31,7 @@ export default {
     },
     reset() {
       this.count = 0
+      window.alert("リセットしました")
     }
   },
 }
