@@ -1,12 +1,10 @@
 <template>
   <div id="app">
-    <p v-if="msg">
-      {{ msg }}
-    </p>
-    <p v-else>
-      何も入力されていないやないかい
-    </p>
-    <input type="text" v-model="msg" />
+    <p>{{ count }}回押されました</p>
+
+    <button @click="incrementCount">
+      インクリメント
+    </button>
   </div>
 </template>
 
@@ -14,7 +12,14 @@
 export default {
   data() {
     return {
-      msg: '',
+      count: 0,
+    }
+  },
+  methods: {
+    incrementCount() {
+      console.log(`before increment value: ${this.count}`)
+      this.count += 1
+      console.log(`after increment value: ${this.count}`)
     }
   },
 }
