@@ -1,14 +1,25 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
-    </div>
-    <router-view />
+    <p v-if="msg">
+      {{ msg }}
+    </p>
+    <p v-else>
+      何も入力されていないやないかい
+    </p>
+    <input type="text" v-model="msg" />
   </div>
 </template>
 
-<style>
+<script>
+export default {
+  data() {
+    return {
+      msg: '',
+    }
+  },
+}
+</script>
+<style scoped>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
