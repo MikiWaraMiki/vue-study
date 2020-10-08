@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <input type="number" v-model="arrayNum" placeholder="数字を入力してください" />
-    <button @click="createArray()">FizzBuzz計算</button>
-    <template v-if="nums">
-      <p v-for="num in nums" :key="num">
-        {{ num }}は{{ fizzBuzzText(num) }}
-      </p>
-    </template>
-    <template v-else>
-      <p>数字が入力されていません</p>
-    </template>
+    <div class="single-data-biding">
+      <h3>単方向データバイディングの例</h3>
+      <p> {{ singleText }}</p>
+    </div>
+
+    <div class="bidirectional-data-biding">
+      <h3>双方向データバイディングの例</h3>
+      <input type="text" v-model="bidirectionalText" />
+      <p> {{ bidirectionalText }}</p>
+    </div>
   </div>
 </template>
 
@@ -17,21 +17,8 @@
 export default {
   data() {
     return {
-      nums: undefined,
-      arrayNum: undefined,
-    }
-  },
-  methods: {
-    createArray() {
-      if( !this.arrayNum || this.arrayNum < 1) return
-
-      const parseIntNumber = parseInt(this.arrayNum)
-      this.nums = [...Array(parseIntNumber).keys()].map(i => ++i)
-      console.log(this.nums)
-    },
-    fizzBuzzText(num) {
-      const fizzBuzzStr = (num % 3 ? '' : 'Fizz') + (num % 5 ? '' : 'Buzz')
-      return fizzBuzzStr || 'なんでもないや'
+      singleText: '単方向データバイディング',
+      bidirectionalText: '双方向データバイディング',
     }
   },
 }
