@@ -127,6 +127,7 @@ export default {
         return !this.removeTodoIds.includes(todo.id)
       })
       this.todos = newTodos
+      this.removeTodoIds = []
     },
     selectRemoveTodos(selectedTodo) {
       const removeIndex = this.removeTodoIds.findIndex(todoId => todoId === selectedTodo.id)
@@ -140,6 +141,7 @@ export default {
       this.errors = []
       if (!this.validate()) {
         this.isError = true
+        return
       }
       const appendTodo = {
         id: this.todos.length + 1,
