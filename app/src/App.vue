@@ -1,14 +1,34 @@
 <template>
   <div id="app">
-    <div class="flex-item">
-      <p>今のスクロールの値は{{ scrollY }}</p>
-      <p>タイマーの値は{{ timer }}</p>
-      <p v-if="scrollOverHundled">
-        100px以上スクロール しました。
-      </p>
-    </div>
-    <div v-for="i in repeatArray" :key="i">
-      <p>{{ i }}</p>
+    <template v-if="isShow">
+      <div class="o-group-a">
+        <h3>グループA</h3>
+        <ul>
+          <li v-for="item in groupAItems" :key="item.val">
+            {{ item.val }}
+          </li>
+        </ul>
+      </div>
+      <div class="o-group-b">
+        <h3>グループB</h3>
+        <ul>
+          <li v-for="item in groupBItems" :key="item.val">
+            {{ item.val }}
+          </li>
+        </ul>
+      </div>
+      <div class="o-group-non">
+        <h3>無所属</h3>
+        <ul>
+          <li v-for="item in groupNonItems" :key="item.val">
+            {{ item.val }}
+          </li>
+        </ul>
+      </div>
+    </template>
+    <div>
+      <button @click="isShow = !isShow">ボタン</button>
+      <p>{{ showText }}</p>
     </div>
   </div>
 </template>
@@ -17,37 +37,39 @@
 export default {
   data() {
     return {
-      scrollY: 0,
-      timer: null,
-      arrayNum: 100,
+      items: [
+        {group: 'a', val: 'A1'},
+        {group: 'a', val: 'A2'},
+        {group: 'b', val: 'B1'},
+        {group: 'non', val: "Non1"},
+        {group: 'a', val: 'A3'},
+        {group: 'b', val: 'B2'},
+        {group: 'b', val: 'B3'},
+        {group: 'non', val: 'Non2'},
+      ],
+      isShow: false
     }
   },
   computed: {
-    repeatArray() {
-      return [...Array(this.arrayNum).keys()]
+    groupAItems() {
+      console.log('return group a')
+      return this.items.filter(item => item.group === 'a')
     },
-    scrollOverHundled() {
-      return this.scrollY > 100
+    groupBItems() {
+      console.log('return group b')
+      return this.items.filter(item => item.group === 'b')
+    },
+    groupNonItems() {
+      console.log('return group non')
+      return this.items.filter(item => item.group === 'non')
+    },
+    showText() {
+      if (this.isShow) return '表示しています'
+
+      return '表示していません'
     }
-  },
-  created() {
-    // イベントリスナにハンドラを登録
-    window.addEventListener('scroll', this.handleScroll)
-  },
-  beforeDestroy() {
-    // SPAとかで動くアプリだと必須。
-    window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
-    handleScroll() {
-      if (this.timer === null) {
-        this.timer = setTimeout(() => {
-          this.scrollY = window.scrollY
-          clearTimeout(this.timer)
-          this.timer = null
-        }, 200)
-      }
-    }
   },
 }
 </script>
@@ -71,14 +93,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
-.flex-item {
-  position: -webkit-sticky;
-  position: sticky;
-  top: 0;
-  height: 100px;
-  background: coral;
-  color: white;
-  margin-top: 0px;
 }
 </style>
