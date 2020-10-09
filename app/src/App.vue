@@ -1,71 +1,14 @@
 <template>
   <div id="app">
-    <div class="p-text-area">
-      <h3>テキストエリア</h3>
-      <textarea v-model="textArea" placeholder="placeholder"></textarea>
-      <p>{{ textArea }}</p>
+    <div class="flex-item">
+      <p>今のスクロールの値は{{ scrollY }}</p>
+      <p>タイマーの値は{{ timer }}</p>
+      <p v-if="scrollOverHundled">
+        100px以上スクロール しました。
+      </p>
     </div>
-    <div class="p-checkbox">
-      <h3>チェックボックス </h3>
-      <div class="single">
-        <h4>チェックボックス だけが1つだけの場合</h4>
-        <label for="checkbox">
-          チェックボックス
-        </label>
-        <input id="checkbox" type="checkbox" v-model="checkVal" >
-        <p>{{ checkVal }}</p>
-        <p>{{ checkboxText }}</p>
-      </div>
-      <div class="multi">
-        <h4>チェックボックス が複数の場合</h4>
-        <div v-for="item in items" :key="item.key">
-          <label :for="item.key">
-            {{ item.val }}
-          </label>
-          <input :id="item.key" type="checkbox" :value="item.key" v-model="selectItems" />
-        </div>
-        <p>{{ selectItems }}</p>
-      </div>
-    </div>
-    <div class="p-radio">
-      <h3>ラジオボタン</h3>
-      <div v-for="item in radioItems" :key="item.key">
-        <label :for="item.key">
-          好きな酒は{{ item.val }}
-        </label>
-        <input :id="item.key" type="radio" :value="item.key" v-model="selectRadioItem" />
-      </div>
-      <p>{{ selectRadioItem }}</p>
-    </div>
-    <div class="p-select">
-      <h3>セレクトボックス</h3>
-      <select v-model="selectedItem">
-        <option disabled="disabled">選択してください</option>
-        <option v-for="item in selectBoxItems" :key="item.key" :value="item.key">
-          {{ item.val }}
-        </option>
-      </select>
-      <p>選択したスタンプは{{selectedItem}}です</p>
-    </div>
-    <div class="p-file">
-      <h3>ファイルのアップロード</h3>
-      <input type="file" @change="handleImage" />
-      <div v-if="preview">
-        <img :src="preview" />
-      </div>
-      <div v-else>
-        <p>画像が選択されていません</p>
-      </div>
-    </div>
-
-    <div class="p-lazy">
-      <h3>lazyなしの場合</h3>
-      <input type="text" v-model="nonLazy" />
-      <p>{{ nonLazy }}</p>
-
-      <h3>lazyありの場合</h3>
-      <input type="text" v-model.lazy="lazyText" />
-      <p>{{ lazyText }}</p>
+    <div v-for="i in repeatArray" :key="i">
+      <p>{{ i }}</p>
     </div>
   </div>
 </template>
@@ -74,42 +17,35 @@
 export default {
   data() {
     return {
-      textArea: 'テキストエリアの内容',
-      checkVal: false,
-      selectItems: [],
-      selectRadioItem: '',
-      radioItems: [
-        {key: 'split', val: 'スピリッツ' },
-        {key: 'cocalero', val: 'コカレロ'},
-        {key: 'absinthe', val: 'アブサン'},
-      ],
-      items: [
-        {key: 'orange', val: 'オレンジ'},
-        {key: 'banana', val: 'バナナ'},
-        {key: 'grape', val: 'ぶどう'}
-      ],
-      selectBoxItems: [
-        {key: 'iyadesu', val: 'いやです'},
-        {key: 'damedesu', val: 'だめです'},
-        {key: 'usodesu', val: 'ウソです'},
-      ],
-      selectedItem: '',
-      preview: undefined,
-      nonLazy: '',
-      lazyText: '',
+      scrollY: 0,
+      timer: null,
+      arrayNum: 100,
     }
   },
   computed: {
-    checkboxText() {
-      if (this.checkVal) return '選択されています'
-      return '選択されていません'
-  }
+    repeatArray() {
+      return [...Array(this.arrayNum).keys()]
+    },
+    scrollOverHundled() {
+      return this.scrollY > 100
+    }
+  },
+  created() {
+    // イベントリスナにハンドラを登録
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeDestroy() {
+    // SPAとかで動くアプリだと必須。
+    window.removeEventListener('scroll', this.handleScroll)
   },
   methods: {
-    handleImage(e) {
-      const file = e.target.files[0]
-      if ( file && file.type.match(/^image\/(png|jpeg|jpg)$/) ) {
-        this.preview = window.URL.createObjectURL(file)
+    handleScroll() {
+      if (this.timer === null) {
+        this.timer = setTimeout(() => {
+          this.scrollY = window.scrollY
+          clearTimeout(this.timer)
+          this.timer = null
+        }, 200)
       }
     }
   },
@@ -135,5 +71,14 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
+}
+.flex-item {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  height: 100px;
+  background: coral;
+  color: white;
+  margin-top: 0px;
 }
 </style>
