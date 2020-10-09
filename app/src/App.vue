@@ -57,6 +57,16 @@
         <p>画像が選択されていません</p>
       </div>
     </div>
+
+    <div class="p-lazy">
+      <h3>lazyなしの場合</h3>
+      <input type="text" v-model="nonLazy" />
+      <p>{{ nonLazy }}</p>
+
+      <h3>lazyありの場合</h3>
+      <input type="text" v-model.lazy="lazyText" />
+      <p>{{ lazyText }}</p>
+    </div>
   </div>
 </template>
 
@@ -84,7 +94,9 @@ export default {
         {key: 'usodesu', val: 'ウソです'},
       ],
       selectedItem: '',
-      preview: undefined
+      preview: undefined,
+      nonLazy: '',
+      lazyText: '',
     }
   },
   computed: {
