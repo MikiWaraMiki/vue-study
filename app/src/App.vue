@@ -1,34 +1,12 @@
 <template>
   <div id="app">
-    <template v-if="isShow">
-      <div class="o-group-a">
-        <h3>グループA</h3>
-        <ul>
-          <li v-for="item in groupAItems" :key="item.val">
-            {{ item.val }}
-          </li>
-        </ul>
-      </div>
-      <div class="o-group-b">
-        <h3>グループB</h3>
-        <ul>
-          <li v-for="item in groupBItems" :key="item.val">
-            {{ item.val }}
-          </li>
-        </ul>
-      </div>
-      <div class="o-group-non">
-        <h3>無所属</h3>
-        <ul>
-          <li v-for="item in groupNonItems" :key="item.val">
-            {{ item.val }}
-          </li>
-        </ul>
-      </div>
-    </template>
     <div>
-      <button @click="isShow = !isShow">ボタン</button>
-      <p>{{ showText }}</p>
+      <label for="price">金額</label>
+      <input id="price" v-model.number="price" />
+    </div>
+    <div>
+      <label for="amount">税込み</label>
+      <input id="amount" v-model.number="amount" />
     </div>
   </div>
 </template>
@@ -37,39 +15,15 @@
 export default {
   data() {
     return {
-      items: [
-        {group: 'a', val: 'A1'},
-        {group: 'a', val: 'A2'},
-        {group: 'b', val: 'B1'},
-        {group: 'non', val: "Non1"},
-        {group: 'a', val: 'A3'},
-        {group: 'b', val: 'B2'},
-        {group: 'b', val: 'B3'},
-        {group: 'non', val: 'Non2'},
-      ],
-      isShow: false
+      price: 0,
+      tax: 0.1,
     }
   },
   computed: {
-    groupAItems() {
-      console.log('return group a')
-      return this.items.filter(item => item.group === 'a')
-    },
-    groupBItems() {
-      console.log('return group b')
-      return this.items.filter(item => item.group === 'b')
-    },
-    groupNonItems() {
-      console.log('return group non')
-      return this.items.filter(item => item.group === 'non')
-    },
-    showText() {
-      if (this.isShow) return '表示しています'
-
-      return '表示していません'
+    amount: {
+      get: function() { return Math.round(this.price * (1 + this.tax)) },
+      set: function(val) { this.price = Math.round(val / (1 + this.tax)) }
     }
-  },
-  methods: {
   },
 }
 </script>
