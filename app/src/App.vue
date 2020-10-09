@@ -1,13 +1,21 @@
 <template>
   <div id="app">
     <div>
-      <label for="price">金額</label>
-      <input id="price" v-model.number="price" />
+      <h3>githubからリポジトリの一覧を取得</h3>
+      <select v-model="current">
+        <option v-for="topic in topics" :key="topic.val" :value="topic.val">
+          {{ topic.name }}
+        </option>
+      </select>
     </div>
-    <div>
-      <label for="amount">税込み</label>
-      <input id="amount" v-model.number="amount" />
-    </div>
+    <template v-if="repoList.length > 0">
+      <div v-for="(repo,index) in repoList" :key="index">
+        {{ repo.full_name }}
+      </div>
+    </template>
+    <template v-else>
+      Not Found.
+    </template>
   </div>
 </template>
 
@@ -15,14 +23,28 @@
 export default {
   data() {
     return {
-      price: 0,
-      tax: 0.1,
+      repoList: [],
+      current: '',
+      previous: '',
+      topics: [
+        {val: 'vue', name: 'Vue.js'},
+        {val: 'react', name: 'React.js'},
+        {val: 'jQuery', name: 'jQuery'},
+      ]
     }
   },
-  computed: {
-    amount: {
-      get: function() { return Math.round(this.price * (1 + this.tax)) },
-      set: function(val) { this.price = Math.round(val / (1 + this.tax)) }
+  watch: {
+    current: async (newVal, oldVal) => {
+      if (newVal !== oldVal) {
+        try {
+          const result = await axios.get('https://api.github.com/search/repositories', {
+            params: {q: `topic:${newVal}`}
+          })
+          this.repoList = result.data.items
+        } catch (e) {
+          console.error(e)
+        }
+      }
     }
   },
 }
