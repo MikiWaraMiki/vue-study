@@ -2,29 +2,39 @@
   <div id="app">
     <hello-world
       :msg="msg"
-      @input="onClickVal($event)"
+      @input="v => msg=v"
     />
+    <human-data-form
+      v-bind.sync="human"
+    />
+    <p>{{ this.humanDesc }}</p>
   </div>
 </template>
 <script>
 // @ is an alias to /src
 import HelloWorld from '@/components/HelloWorld'
+import HumanDataForm from '@/components/HumanDataForm'
 
 export default {
   components: {
     HelloWorld,
+    HumanDataForm
   },
   data() {
     return {
       msg: "Hello World!",
-      clickVal: false,
+      human: {
+        lastName: '',
+        firstName: '',
+        age: 0,
+      }
     }
   },
-  methods: {
-    onClickVal(val) {
-      this.msg = val.target.value
+  computed: {
+    humanDesc() {
+      return `${this.human.firstName + this.human.lastName}です。年は、10歳サバよんで、${this.human.age}歳です。`
     }
-  },
+  }
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <input type="text" :val="msg" @input="v => $emit('input', v)"/>
+    <input type="text" v-model="_msg" />
   </div>
 </template>
 
