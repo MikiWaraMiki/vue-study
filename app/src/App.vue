@@ -10,7 +10,9 @@
     </div>
     <div>
       <h3>ChildSlotを直接呼び出します</h3>
-      <child-slot></child-slot>
+      <child-slot>
+        <slot>デフォルトスロットをApp.Vueで指定しました</slot>
+      </child-slot>
     </div>
   </div>
 </template>
