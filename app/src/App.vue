@@ -2,6 +2,7 @@
   <div id="app">
     <hello-world
       :msg="msg"
+      @input="onClickVal($event)"
     />
   </div>
 </template>
@@ -15,7 +16,13 @@ export default {
   },
   data() {
     return {
-      msg: "Hello World!"
+      msg: "Hello World!",
+      clickVal: false,
+    }
+  },
+  methods: {
+    onClickVal(val) {
+      this.msg = val.target.value
     }
   },
 }

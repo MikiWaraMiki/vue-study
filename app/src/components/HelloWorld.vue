@@ -1,6 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <input type="text" :val="msg" @input="v => $emit('input', v)"/>
   </div>
 </template>
 
@@ -9,6 +10,17 @@ export default {
   name: 'HelloWorld',
   props: {
     msg: String
+  },
+  computed: {
+    _msg: {
+      get() {
+        return this.msg
+      },
+      set(val) {
+        console.log(val)
+        this.$emit('input', val)
+      }
+    }
   }
 }
 </script>

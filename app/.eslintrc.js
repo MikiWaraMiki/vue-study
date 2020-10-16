@@ -20,7 +20,7 @@ module.exports = {
       'no-plusplus': 'off',
       'func-names': 'off',
       'vue/component-name-in-template-casing': 'off',
-      'no-console': 'error',
+      'no-console': 'off',
       'no-debugger': 'error',
       "import/prefer-default-export": "off", // default exportだと変数・関数が使えないのでOFF
       "import/no-unresolved": 'off', // Vueの@とか~が使えなくなるため追加
