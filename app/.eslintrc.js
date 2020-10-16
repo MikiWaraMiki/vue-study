@@ -41,11 +41,14 @@ module.exports = {
         "babel-module": {
           "root": '.',
           "alias": {
-            "~": "./frontend/src",
-            "@": "./frontend/src",
+            "~": "./app/src",
+            "@": "./app/src",
             "~~": ".",
             "@@": "."
           }
+        },
+        alias: {
+          extensions: [".vue", ".json", ".js"]
         }
       }
     }
