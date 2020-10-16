@@ -1,6 +1,9 @@
 <template>
   <div>
     <p>これは共通で表示される部品です。</p>
+    <slot>
+      <p>これは、名前をつけていないスロットです。</p>
+    </slot>
     <slot name="header">
       <p>header slotが指定されなかった場合に表示される部品です</p>
     </slot>
