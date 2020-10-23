@@ -1,32 +1,27 @@
 <template>
   <div id="app">
     <div>
-      <h3>ParentAを呼び出します</h3>
-      <parent-a></parent-a>
-    </div>
-    <div>
-      <h3>ParentBを呼び出します</h3>
-      <parent-b></parent-b>
-    </div>
-    <div>
-      <h3>ChildSlotを直接呼び出します</h3>
-      <child-slot>
-        <slot>デフォルトスロットをApp.Vueで指定しました</slot>
-      </child-slot>
+      <scoped-slot>
+        <template v-slot:header>
+          <div>
+            Headerどす〜〜〜
+          </div>
+        </template>
+        <template #footer="slotProps">
+          <p>FooterFoterFooterFooter</p>
+          <p>{{ slotProps.copyLight }}</p>
+        </template>
+      </scoped-slot>
     </div>
   </div>
 </template>
 <script>
 // @ is an alias to /src
-import ParentA from '@/components/ParentA'
-import ParentB from '@/components/ParentB'
-import ChildSlot from '@/components/ChildSlot.vue'
+import ScopedSlot from '@/components/ScopedSlot'
 
 export default {
   components: {
-    ParentA,
-    ParentB,
-    ChildSlot
+    ScopedSlot
   },
 }
 </script>
