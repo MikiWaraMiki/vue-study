@@ -1,27 +1,16 @@
 <template>
   <div id="app">
     <div>
-      <scoped-slot>
-        <template v-slot:header>
-          <div>
-            Headerどす〜〜〜
-          </div>
-        </template>
-        <template #footer="slotProps">
-          <p>FooterFoterFooterFooter</p>
-          <p>{{ slotProps.copyLight }}</p>
-        </template>
-      </scoped-slot>
+      <home />
     </div>
   </div>
 </template>
 <script>
 // @ is an alias to /src
-import ScopedSlot from '@/components/ScopedSlot'
-
+import Home from '@/views/Home'
 export default {
   components: {
-    ScopedSlot
+    Home
   },
 }
 </script>

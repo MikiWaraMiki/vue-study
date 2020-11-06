@@ -20,5 +20,6 @@
     "snakecase",
     "vuetify",
     "browserslist"
-  ]
+  ],
+  "git.ignoreLimitWarning": true
 }
