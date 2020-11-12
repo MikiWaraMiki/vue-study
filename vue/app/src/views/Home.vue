@@ -24,10 +24,10 @@ export default {
       isMounted: false,
     }
   },
-  async created() {
+  created() {
     try {
       const url = '/api/v1/for_clients/professionals'
-      const result = await this.axios.get(url)
+      const result = this.axios.get(url)
       this.professionals = result.data.professionals
     } catch (err) {
       console.error(err)
