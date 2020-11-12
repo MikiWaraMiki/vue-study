@@ -1,0 +1,17 @@
+ja:
+  active_record:
+    models:
+      todo: "Todo"
+    attributes:
+      todo:
+        name: '名前'
+        status: 'ステータス'
+        description: '詳細'
+        created_at: '作成日時'
+        updated_at: '更新日時'
+  enumerize:
+    todo:
+      status:
+        not_started_yet: '未着手'
+        in_progress: '進行中'
+        complete: '完了'
