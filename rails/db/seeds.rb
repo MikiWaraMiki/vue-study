@@ -5,3 +5,9 @@
 #
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
+require 'factory_bot_rails'
+# Todo 10件作成
+10.times do |count_index|
+  todo = FactoryBot.build(:todo, name: "test todo #{count_index}", status: Todo.status.values.sample.to_sym)
+  todo.save!
+end

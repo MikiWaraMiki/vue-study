@@ -7,6 +7,8 @@ services:
         - ./vue:/app
       stdin_open: true
       tty: true
+      depends_on:
+        - rails
     rails:
       build: ./rails/
       ports:

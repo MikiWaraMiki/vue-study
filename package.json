@@ -1,0 +1,10 @@
+{
+  "name": "sample-app",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "setup:rails:db": "docker-compose run  --rm rails bundle exec rails db:migrate:reset",
+    "setup:rails:seed": "docker-compose run --rm rails bundle exec rails db:seed",
+    "setup:rails": "yarn setup:rails:db && yarn setup:rails:seed"
+  }
+}

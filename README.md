@@ -1,13 +1,19 @@
 # 環境構築
 
+## build
+
 ```
 docker-compose build
-
-docker-compose up -d
 ```
 
-下記にアクセス。
+## rails db setup
 
 ```
-http://127.0.0.1:8080
+yarn setup:rails
+```
+
+## up
+
+```
+docker-compose up rails
 ```
