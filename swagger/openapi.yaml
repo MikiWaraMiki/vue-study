@@ -1,0 +1,171 @@
+openapi: 3.0.0
+info:
+  title: sample-api
+  version: '1.0'
+servers:
+  - url: 'http://localhost:3000/api/v1'
+    description: 開発環境
+paths:
+  /todos:
+    get:
+      summary: "todo一覧の取得"
+      description: "DBに登録されたレスポンスの一覧を返します"
+      responses:
+        200:
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todos:
+                    type: array
+                    items:
+                      $ref: "#/components/schemas/Todo"
+    post:
+      summary: "todo新規登録"
+      description: "DBにtodoを１件登録する"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                status:
+                  type: string
+                description:
+                  type: string
+      responses:
+        201:
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    type: object
+                    $ref: "#/components/schemas/Todo"
+        422:
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UnProcessAbleEntity"
+  /todos/{id}:
+    put:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                status:
+                  type: string
+                description:
+                  type: string
+      responses:
+        200:
+          description: created
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    type: object
+                    $ref: "#/components/schemas/Todo"
+        422:
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UnProcessAbleEntity"
+        404:
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    default: 404
+                  message:
+                    type: string
+    delete:
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: number
+      responses:
+        204:
+          description: no content
+        422:
+          description: unprocessable entity
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: "#/components/schemas/UnProcessAbleEntity"
+        404:
+          description: not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: number
+                    default: 404
+                  message:
+                    type: string
+
+
+components:
+  schemas:
+    Todo:
+      title: Todo
+      type: object
+      description: TodoのMock
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        status:
+          type: string
+          description: "not_yet_started in_progress completeのみ"
+        description:
+          type: string
+        createdAt:
+          type: string
+          format: datetime
+        updatedAt:
+          type: string
+          format: datetime
+    UnProcessAbleEntity:
+      title: 422 errors
+      type: object
+      properties:
+        status:
+          type: number
+          default: 422
+        errors:
+          type: array
+          items:
+            type: string
