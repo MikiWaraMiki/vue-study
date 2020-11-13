@@ -3,6 +3,7 @@
 ## Project setup
 
 - 担当者から master.key をもらっておく
+- `rails/config/master.key`を作成して、key をコピペ
 - master.key を配置したらコンテナをビルド
 
 ```
