@@ -19,7 +19,7 @@
       <template v-if="isError">
         <form-error-list :errors="errors" />
       </template>
-      <todo-form :todo.sync="todo"></todo-form>
+      <todo-form :new-todo.sync="todo"></todo-form>
 
       <button class="a-add-btn" @click="createTodo">登録</button>
     </div>
@@ -39,14 +39,16 @@ export default {
   data() {
     return {
       tableHeaders: [],
-      todos: []
+      todos: [],
+      todo: {},
+      isError: false,
     }
   },
   created() {
     this.initialize()
   },
   methods: {
-    initalize() {
+    initialize() {
       // 取得処理を書く
     },
     createTodo() {
@@ -59,7 +61,7 @@ export default {
 }
 </script>
 <style scoped>
-#app {
+#home {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

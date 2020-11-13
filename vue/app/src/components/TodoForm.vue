@@ -26,6 +26,15 @@ export default {
       type: Object,
       required: true
     }
-  }
+  },
+  data() {
+    return {
+      statuses: [
+        { key: 'not_started_yet', name: '未着手' },
+        { key: 'in_progress', name: '進行中' },
+        { key: 'complete', name: '完了' }
+      ]
+    }
+  },
 }
 </script>
