@@ -49,7 +49,6 @@ export default {
   },
   methods: {
     initialize() {
-      // 取得処理を書く
     },
     createTodo() {
       // 登録処理を書く
