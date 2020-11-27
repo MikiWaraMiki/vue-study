@@ -1,5 +1,8 @@
 <template>
  <form class="o-todo-form-area">
+  <div class="m-state-button">
+    <button @click.prevent="incrementState">インクリメント</button>
+  </div>
   <div class="m-name-area">
     <label for="name">名前</label>
     <input id="name" type="text" v-model="newTodo.name" />
@@ -34,6 +37,11 @@ export default {
         { key: 'in_progress', name: '進行中' },
         { key: 'complete', name: '完了' }
       ]
+    }
+  },
+  methods: {
+    incrementState() {
+      this.$store.dispatch('increment')
     }
   },
 }

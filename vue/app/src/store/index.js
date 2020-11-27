@@ -5,10 +5,22 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    count: 0
+  },
+  getters: {
+    countDouble(state) {
+      return state.count * 2
+    }
   },
   mutations: {
+    increment(state) {
+      state.count++
+    }
   },
   actions: {
+    increment({ commit }) {
+      commit('increment')
+    }
   },
   modules: {
   }

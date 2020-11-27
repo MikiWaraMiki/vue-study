@@ -1,12 +1,5 @@
 <template>
   <table class="o-todo-list">
-    <thead>
-      <tr>
-        <th v-for="header in tableHeaders" :key="header.key">
-          {{ header.name}}
-        </th>
-      </tr>
-    </thead>
     <tbody>
       <tr v-for="todo in todos" :key="todo.id" :class="statusRowClass(todo.status)">
         <td>{{ todo.id }}</td>
@@ -26,6 +19,15 @@ export default {
     todos: {
       type: Array,
       required: true
+    },
+  },
+  data() {
+    return {
+      statuses: [
+        { key: "not_started_yet", text: '未着手' },
+        { key: "in_progress", text: '進行中' },
+        { key: "complete", text: '完了' },
+      ]
     }
   },
   methods: {

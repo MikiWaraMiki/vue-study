@@ -1,6 +1,8 @@
 <template>
   <div id="home">
     <h3>Todo一覧</h3>
+    <p>state: {{ stateCount }}</p>
+    <p>stateの２倍: {{ $store.getters.countDouble }}</p>
     <template v-if="todos.length > 0">
       <div class="o-remove-btn-area">
         <button class="a-remove-btn" @click="removeTodo">
@@ -8,7 +10,7 @@
         </button>
       </div>
       <div>
-        <todo-table :todos="todo"></todo-table>
+        <todo-table :todos="todos"></todo-table>
       </div>
     </template>
     <template v-else>
@@ -17,6 +19,7 @@
     <div>
       <h3>Todoを登録</h3>
       <template v-if="isError">
+        <p>{{ errors }}</p>
         <form-error-list :errors="errors" />
       </template>
       <todo-form :new-todo.sync="todo"></todo-form>
@@ -42,16 +45,48 @@ export default {
       todos: [],
       todo: {},
       isError: false,
+      errors: [],
     }
   },
   created() {
     this.initialize()
   },
+  computed: {
+    stateCount() {
+      return this.$store.state.count
+    }
+  },
   methods: {
-    initialize() {
+    async initialize() {
+      try {
+        const { data } = await this.axios.get('http://localhost:3000/api/v1/todos')
+        this.todos = data.todos
+      } catch (err) {
+        console.log(err.status)
+        console.log("エラーーーーーーーーーーーーーーー")
+      } finally {
+        // APIの接続処理が終わった時のことをかく
+      }
     },
-    createTodo() {
-      // 登録処理を書く
+    async createTodo() {
+      try {
+        // APIに対してPOST
+        console.log(this.todo)
+        const params = {
+           todo: {
+            ...this.todo
+          }
+        }
+        console.log(params)
+        const { data } = await this.axios.post('http://127.0.0.1:3000/api/v1/todos', params)
+        console.log(data)
+      } catch(e) {
+        const errorResponse = e.response.data
+        console.log(errorResponse)
+        this.errors = errorResponse.errors
+        console.log(this.errors)
+        this.isError = true
+      }
     },
     removeTodo() {
       // チェックボックス で選択されたTodoを削除する
