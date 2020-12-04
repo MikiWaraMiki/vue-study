@@ -22,7 +22,7 @@
         <p>{{ errors }}</p>
         <form-error-list :errors="errors" />
       </template>
-      <todo-form :new-todo.sync="todo"></todo-form>
+      <todo-form :todo.sync="storeTodoForm"></todo-form>
 
       <button class="a-add-btn" @click="createTodo">登録</button>
     </div>
@@ -42,10 +42,13 @@ export default {
   data() {
     return {
       tableHeaders: [],
-      todos: [],
-      todo: {},
       isError: false,
       errors: [],
+      todo: {
+        name: '',
+        status: '',
+        description: ''
+      }
     }
   },
   created() {
@@ -57,6 +60,14 @@ export default {
     },
     storeTodos() {
       return this.$store.state.todos
+    },
+    storeTodoForm: {
+      get() {
+        return this.$store.getters.getTodo
+      },
+      set(value) {
+        this.$store.dispatch("updateTodo", value)
+      }
     }
   },
   methods: {
@@ -71,16 +82,7 @@ export default {
     },
     async createTodo() {
       try {
-        // APIに対してPOST
-        console.log(this.todo)
-        const params = {
-           todo: {
-            ...this.todo
-          }
-        }
-        console.log(params)
-        const { data } = await this.axios.post('http://127.0.0.1:3000/api/v1/todos', params)
-        console.log(data)
+        await this.$store.dispatch('addTodo')
       } catch(e) {
         const errorResponse = e.response.data
         console.log(errorResponse)

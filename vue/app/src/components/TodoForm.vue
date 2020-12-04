@@ -5,11 +5,11 @@
   </div>
   <div class="m-name-area">
     <label for="name">名前</label>
-    <input id="name" type="text" v-model="newTodo.name" />
+    <input id="name" type="text" v-model="name" />
   </div>
   <div class="m-status-area">
     <label for="status">ステータス</label>
-    <select v-model="newTodo.status">
+    <select v-model="status">
       <option v-for="status in statuses" :key="status.key" :value="status.key">
         {{ status.name }}
       </option>
@@ -17,7 +17,7 @@
   </div>
   <div class="m-description-area">
     <label for="description">詳細</label>
-    <textarea id="description" placeholder="これだけは終わらせないと。。" v-model="newTodo.description"></textarea>
+    <textarea id="description" placeholder="これだけは終わらせないと。。" v-model="description"></textarea>
   </div>
   </form>
 </template>
@@ -25,9 +25,33 @@
 <script>
 export default {
   props: {
-    newTodo: {
+    todo: {
       type: Object,
       required: true
+    }
+  },
+  computed: {
+    name: {
+      get() { return this.todo.name },
+      set(value) {
+        this.todo.name = value
+        this.$emit('update:todo', this.todo)
+      }
+    },
+    status: {
+      get() { return this.todo.status },
+      set(value) {
+        console.log(value)
+        this.todo.status = value
+        this.$emit('update:todo', this.todo)
+      }
+    },
+    description: {
+      get() { return this.todo.description },
+      set(value) {
+        this.todo.description = value
+        this.$emit('update:todo', this.todo)
+      }
     }
   },
   data() {
