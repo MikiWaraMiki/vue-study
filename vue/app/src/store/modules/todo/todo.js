@@ -1,58 +1,55 @@
 /**
- * Todo一覧取得・登録に関わるVuex
+ * Todo登録用Vuex
  */
-
- export default {
-   state: {
-     todos: [],
-     todoName: '',
-     todoDescription: '',
-     todoStatus: ''
-   },
-   getters: {
-     getTodo(state) {
-       return state.todos
-     },
-     getTodo(state) {
+import axios from 'axios'
+const addTodoModule = {
+  namespaced: true,
+  state: {
+    id: '',
+    name: '',
+    description: '',
+    status: ''
+  },
+  getters: {
+    getTodo(state) {
       return {
-        name: state.todoName,
-        status: state.todoStatus,
-        description: state.todoDescription
+        id: '',
+        name: state.name,
+        description: state.description,
+        status: state.status
       }
-     }
-   },
-   mutations: {
-    updateTodo(state, todo) {
-      state.todoName = todo.name
-      state.todoDescription = todo.description
-      state.todoStatus = todo.status
-    },
-    setTodos(state, todos) {
-      state.todos = todos
-    },
-    addTodo(state, todo) {
-      state.todos.push(todo)
     }
-   },
-   actions: {
-    updateTodo({ commit }, todo) {
-      commit('updateTodo', todo)
+  },
+  mutations: {
+    setId(state, id) {
+      state.id = id
     },
-    async fetchTodos({ commit }) {
-      const url = "http://localhost:3000/api/v1/todos"
-      const { data }  = await axios.get(url)
-      commit('setTodos', data.todos)
+    updateName(state, name) {
+      state.name = name
+    },
+    updateStatus(state, status) {
+      state.status = status
+    },
+    updateDescription(state, description) {
+      state.description = description
+    }
+  },
+  actions: {
+    updateTodoValue({ commit }, todo) {
+      commit('updateName', todo.name)
+      commit('updateStatus', todo.status)
+      commit('updateDescription', todo.description)
     },
     async addTodo({ getters, commit }) {
-      const url = "http://localhost:3000/api/v1/todos"
+      const url = 'http://localhost:3000/api/v1/todos'
       const params = {
         todo: {
           ...getters.getTodo
         }
       }
-      console.log(params)
       const { data } = await axios.post(url, params)
-      commit('addTodo', data.todo)
+      commit('setId', data.todo.id)
     }
-   }
- }
+  }
+}
+export { addTodoModule }

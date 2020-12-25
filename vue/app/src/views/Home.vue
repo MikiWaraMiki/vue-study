@@ -3,14 +3,14 @@
     <h3>Todo一覧</h3>
     <p>state: {{ stateCount }}</p>
     <p>stateの２倍: {{ $store.getters['counter/countDouble'] }}</p>
-    <template v-if="storeTodos.length > 0">
+    <template v-if="isSetTodoList">
       <div class="o-remove-btn-area">
         <button class="a-remove-btn" @click="removeTodo">
           削除
         </button>
       </div>
       <div>
-        <todo-table :todos="storeTodos"></todo-table>
+        <todo-table :todos="todoList"></todo-table>
       </div>
     </template>
     <template v-else>
@@ -58,12 +58,15 @@ export default {
     stateCount() {
       return this.$store.getters['counter/countNow']
     },
-    storeTodos() {
-      return this.$store.state.todos
+    isSetTodoList() {
+      return this.$store.getters['todoList/isSetTodo']
+    },
+    todoList() {
+      return this.$store.getters['todoList/getTodoList']
     },
     storeTodoForm: {
       get() {
-        return this.$store.getters.getTodo
+        return this.$store.getters['todo/getTodo']
       },
       set(value) {
         /**
@@ -73,15 +76,14 @@ export default {
          *   description: ''
          * }
          */
-        console.log(value)
-        this.$store.dispatch("updateTodo", value)
+        this.$store.dispatch('todo/updateTodoValue', value)
       }
     }
   },
   methods: {
     async initialize() {
       try {
-        this.$store.dispatch('fetchTodos')
+        this.$store.dispatch('todoList/fetchTodos')
       } catch (err) {
         this.isError = true
       } finally {
@@ -90,7 +92,9 @@ export default {
     },
     async createTodo() {
       try {
-        await this.$store.dispatch('addTodo')
+        await this.$store.dispatch('todo/addTodo')
+        const addTodo = this.$store.getters['todo/getTodo']
+        this.$store.dispatch('todoList/addTodo', addTodo)
       } catch(e) {
         const errorResponse = e.response.data
         console.log(errorResponse)
