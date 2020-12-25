@@ -1,24 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
+// counter module
+import { counterVuexModule } from '@/store/modules/counter'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
+  modules: {
+    counter: counterVuexModule
+  },
   state: {
-    count: 0,
     todos: [],
-    todoName: '',
-    todoStatus: '',
-    todoDescription: '',
+    todoName: '', // Todo名
+    todoStatus: '', // ステータス
+    todoDescription: '', // 詳細
     onSuccess: false,
     onFalse: false,
     errors: []
   },
   getters: {
-    countDouble(state) {
-      return state.count * 2
-    },
     getTodos(state) {
       return state.todos
     },
@@ -31,11 +32,22 @@ export default new Vuex.Store({
     }
   },
   mutations: {
-    increment(state) {
-      state.count++
-    },
     updateTodo(state, todo) {
-      state.todo = todo
+      /**
+       * {
+       *   name: "新しい名前",
+       *   description: "新しい詳細",
+       *   status: '変更されたステータス'
+       * }
+       *
+       * [Vuexの呼び出され方]
+       * TodoForm.vue->Home.vue(set) -> actions内のupdateTodoを呼び出し
+       *              -> mutations内のupdateTodoを呼び出し
+       *                 -> todoName, todoDescription, todoStatus
+       */
+      state.todoName = todo.name
+      state.todoDescription = todo.description
+      state.todoStatus = todo.status
     },
     setTodos(state, todos) {
       state.todos = todos
@@ -45,9 +57,6 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    increment({ commit }) {
-      commit('increment')
-    },
     updateTodo({ commit }, todo) {
       commit('updateTodo', todo)
     },
@@ -63,11 +72,10 @@ export default new Vuex.Store({
           ...getters.getTodo
         }
       }
+      console.log(params)
       const { data } = await axios.post(url, params)
 
       commit('addTodo', data.todo)
     }
   },
-  modules: {
-  }
 })

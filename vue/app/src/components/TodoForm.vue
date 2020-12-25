@@ -65,7 +65,7 @@ export default {
   },
   methods: {
     incrementState() {
-      this.$store.dispatch('increment')
+      this.$store.dispatch('counter/increment')
     }
   },
 }

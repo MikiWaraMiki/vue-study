@@ -2,7 +2,7 @@
   <div id="home">
     <h3>Todo一覧</h3>
     <p>state: {{ stateCount }}</p>
-    <p>stateの２倍: {{ $store.getters.countDouble }}</p>
+    <p>stateの２倍: {{ $store.getters['counter/countDouble'] }}</p>
     <template v-if="storeTodos.length > 0">
       <div class="o-remove-btn-area">
         <button class="a-remove-btn" @click="removeTodo">
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     stateCount() {
-      return this.$store.state.count
+      return this.$store.getters['counter/countNow']
     },
     storeTodos() {
       return this.$store.state.todos
@@ -66,6 +66,14 @@ export default {
         return this.$store.getters.getTodo
       },
       set(value) {
+        /**
+         * {
+         *   name: '',
+         *   status: '',
+         *   description: ''
+         * }
+         */
+        console.log(value)
         this.$store.dispatch("updateTodo", value)
       }
     }
