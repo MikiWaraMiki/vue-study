@@ -1,6 +1,10 @@
 <template>
   <div id="home">
     <h3>Todo一覧</h3>
+    <div>
+      <router-link to="/page1">page1に飛ぶ</router-link>
+      <router-link to="/page2">page2に飛ぶ</router-link>
+    </div>
     <p>state: {{ stateCount }}</p>
     <p>stateの２倍: {{ $store.getters['counter/countDouble'] }}</p>
     <template v-if="isSetTodoList">

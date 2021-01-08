@@ -1,16 +1,12 @@
 <template>
   <div id="app">
     <div>
-      <home />
+      <router-view></router-view>
     </div>
   </div>
 </template>
 <script>
 // @ is an alias to /src
-import Home from '@/views/Home'
 export default {
-  components: {
-    Home
-  },
 }
 </script>
