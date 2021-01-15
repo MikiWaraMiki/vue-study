@@ -3,7 +3,7 @@ import VueRouter from 'vue-router'
 import Home from '@/views/Home.vue'
 import Page1 from '@/views/Page1.vue'
 import Page2 from '@/views/Page2.vue'
-
+import PageShow from '@/views/Page1/PageShow'
 Vue.use(VueRouter)
 
 const routes = [
@@ -27,6 +27,11 @@ const routes = [
   {
     path: '/page2',
     component: Page2
+  },
+  {
+    path: '/page1/:id(\\d+)',
+    component: PageShow,
+    props: route => ({ id: Number(route.params.id) })
   }
 ]
 
