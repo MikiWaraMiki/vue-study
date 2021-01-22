@@ -3,7 +3,11 @@
     <tbody>
       <tr v-for="todo in todos" :key="todo.id" :class="statusRowClass(todo.status)">
         <td>{{ todo.id }}</td>
-        <td>{{ todo.name }}</td>
+        <td>
+          <router-link :to="`/todos/${todo.id}`">
+            {{ todo.name }}
+          </router-link>
+        </td>
         <td>{{ statusText(todo.status) }}</td>
         <td>{{ todo.description }}</td>
         <td>
