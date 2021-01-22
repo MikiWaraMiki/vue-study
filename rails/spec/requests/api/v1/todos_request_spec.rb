@@ -34,6 +34,24 @@ RSpec.describe "Api::V1::Todos", type: :request do
     end
   end
 
+  describe "GET /api/v1/todos/{:id}" do
+    let!(:todo) { create(:todo) }
+
+    context '存在するtodo' do
+      it 'レスポンス200を返す' do
+        get api_v1_todo_path(todo.id)
+        expect(response.status).to eq 200
+      end
+    end
+
+    context '存在しないtodo' do
+      it 'レスポンス404を返す' do
+        get api_v1_todo_path(0)
+        expect(response.status).to eq 404
+      end
+    end
+  end
+
   describe "PUT /api/v1/todos/{:id}" do
     let!(:todo) { create(:todo) }
 

@@ -56,6 +56,24 @@ paths:
                 type: object
                 $ref: "#/components/schemas/UnProcessAbleEntity"
   /todos/{id}:
+    get:
+      parameters:
+        - in: path
+          name: id
+          schema:
+            type: number
+          required: true
+      responses:
+        200:
+          description: show todo
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  todo:
+                    type: object
+                    $ref: '#/components/schemas/Todo'
     put:
       parameters:
         - in: path

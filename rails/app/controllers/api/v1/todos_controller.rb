@@ -1,11 +1,17 @@
 class Api::V1::TodosController < ApplicationController
-  before_action :fetch_todo, only: %i(update destroy)
+  before_action :fetch_todo, only: %i(show update destroy)
 
   # GET /api/v1/todos
   def index
     @todos = Todo.all
 
     render :index, formats: :json, handlers: :jbuilder, status: :ok
+  end
+
+  # GET /api/v1/todos
+  def show
+
+    render :show, formats: :json, handlers: :jbuilder, status: :ok
   end
 
   # POST /api/v1/todos
