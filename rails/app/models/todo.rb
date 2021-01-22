@@ -14,7 +14,10 @@ class Todo < ApplicationRecord
 
   enumerize :status, in: %i(not_started_yet in_progress complete)
 
+  has_many :todo_comments
+
   validates :name, presence: true, length: { maximum: 50 }
   validates :description, presence: true, length: { maximum: 255 }
   validates :status, presence: true
+
 end

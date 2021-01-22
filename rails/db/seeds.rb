@@ -11,3 +11,13 @@ require 'factory_bot_rails'
   todo = FactoryBot.build(:todo, name: "test todo #{count_index}", status: Todo.status.values.sample.to_sym)
   todo.save!
 end
+
+# Todoコメントをそれぞれ10件登録
+todos = Todo.all
+
+todos.each do |todo|
+  10.times do |count_index|
+    todo_comment = FactoryBot.build(:todo_comment, todo: todo)
+    todo_comment.save!
+  end
+end
